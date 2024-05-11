@@ -38,8 +38,9 @@ class firefly_algo:
                     if(self.fitness_value[j] < self.fitness_value[i]):
                         if i == j: 
                             continue
-                        self.data[i] = self.move_to(i, j)
-                        self.fitness_value[i] = self.fitness_function(self.data[i])
+                        self.data[i], updated_stat = self.move_to(i, j)
+                        if updated_stat:
+                            self.fitness_value[i] = self.fitness_function(self.data[i])
             self.movement.append(self.data)
             self.movement_fitness.append(self.fitness_value)
         
@@ -51,8 +52,8 @@ class firefly_algo:
         new_x = data_x + self.beta*(e**(self.gamma*-1 * (self.distance(data_x, data_y)**2)))*(data_x - data_y) + self.alpha * self.gamma * (self.generate_random() - 0.5) * self.scale
 
         if new_x < data_x:
-            return new_x
-        return data_x
+            return new_x, True
+        return data_x, False
 
     def distance(self, xi:float, xj:float):
         return sqrt((xi - xj)**2)
