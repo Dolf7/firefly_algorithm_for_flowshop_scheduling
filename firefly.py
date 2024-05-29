@@ -2,6 +2,7 @@ from random import random
 from math import exp
 from math import e 
 from math import sqrt
+import numpy as np
 
 
 class firefly_algo:
@@ -43,7 +44,29 @@ class firefly_algo:
                             self.fitness_value[i] = self.fitness_function(self.data[i])
             self.movement.append(self.data)
             self.movement_fitness.append(self.fitness_value)
-        
+    
+    # def run(self):
+    # # Pre-calculate distances for efficiency
+    #     distances = np.zeros((self.population, self.population))
+    #     for i in range(self.population):
+    #         for j in range(i + 1, self.population):  # Avoid redundant calculations
+    #             distances[i, j] = self.distance(self.data[i], self.data[j])
+    #             distances[j, i] = distances[i, j]  # Mirror for efficiency
+
+    #     for x in range(self.iter):
+    #         for i in range(self.population):
+    #             # Find the brightest firefly (excluding itself)
+    #             brightest_index = np.argmin(self.fitness_value)
+    #             if i != brightest_index:
+    #                 # Update position based on the brightest firefly
+    #                 self.data[i], updated_stat = self.move_to(i, brightest_index, distances)
+    #                 if updated_stat:
+    #                     self.fitness_value[i] = self.fitness_function(self.data[i])
+    #         self.movement.append(self.data.copy())  # Copy data to avoid memory leaks
+    #         self.movement_fitness.append(self.fitness_value.copy())
+
+
+
 
     def move_to(self, x, y):
         data_x = self.data[x]
